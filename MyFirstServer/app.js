@@ -9,4 +9,12 @@ app.get('/IMG', (req, res) => {
     res.sendFile(clientDir + '/joe_the_goat.jpg')
 })
 
+app.use(express.urlencoded())
+app.use(express.json())
+
+app.post('/', function (req, res) {
+    console.log(req.body.name +  "\n" + req.body.email)
+    res.redirect("/")
+  })
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
