@@ -1,31 +1,24 @@
 const express = require('express')
 const dBModule = require('./dBModule')
 const PersonModel = require('./PersonModel')
-const collectionLocation = 'webshop' //connect this to dBModule
 const app = express()
 const port = 3000
+dBModule.connectToMongoose('people')
 
 const clientDir = __dirname + "\\client\\"
 
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(express.static(clientDir))
 
 app.get('/', (req, res) => {
-  res.sendFile(clientDir + "index.html")
-})
-
-app.get('/stilen', (req, res) => {
-  res.sendFile(clientDir + "stule.css")
-})
-
-app.get('/jesus', (req, res) => {
-  res.sendFile(clientDir + "download.jpg")
+  res.render('pages/index.ejs', {name: "stranger"})
 })
 
 app.post('/', (req, res) => {
   dBModule.saveToMongoose(PersonModel.createPerson(req.body.name, req.body.email, req.body.age))
 
-  res.redirect('/')
+  res.render('pages/index.ejs', {name: req.body.name})
 })
 
 app.listen(port, () => {
