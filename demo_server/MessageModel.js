@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 
-const messageSchema = new mongoose.Schema({
+const messagePostSchema = new mongoose.Schema({
     email: String,
     message: String
 })
 
-const Message = mongoose.model('Message', messageSchema);
+const MessagePost = mongoose.model('Message', messagePostSchema);
 
-exports.createMessage = (email, message) =>{
-    let message = new Message({
-        email: email,
-        message: message
+exports.createMessage = (inEmail, inMessage) =>{
+    let message = new MessagePost({
+        email: inEmail,
+        message: inMessage
     })
     return message;
 }
 
-exports.getMessages = async () =>{
-    let message = await Message.find({})
+exports.getAllMessages = async () =>{
+    let message = await MessagePost.find({})
     return message;
 }
