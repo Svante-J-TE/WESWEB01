@@ -11,8 +11,15 @@ app.use(express.json())
 app.use(express.urlencoded())
 app.use(express.static(clientDir))
 
+app.set('view engine', 'ejs')
+
 app.get('/', (req, res) => {
   res.render('pages/index.ejs', {name: "stranger"})
+})
+
+app.get('/messages', async, (req, res) =>{
+  let messages = await MessageModel.getMessages()
+  res.render("pages/messages.ejs", {names: messages})
 })
 
 app.post('/', (req, res) => {
